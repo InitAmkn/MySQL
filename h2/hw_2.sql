@@ -18,12 +18,12 @@ VALUES
 SELECT * FROM sales;
 
 SELECT *,
-CASE
-WHEN count_product < 100 THEN "Маленький заказ"
-WHEN count_product BETWEEN 100 AND 300 THEN "Средний заказ"
-WHEN count_product > 300 THEN "Большой заказ"
-ELSE "нет информации по кол-ву"
-END AS 'Тип заказа'
+    CASE
+    WHEN count_product < 100 THEN "Маленький заказ"
+    WHEN count_product BETWEEN 100 AND 300 THEN "Средний заказ"
+    WHEN count_product > 300 THEN "Большой заказ"
+    ELSE "нет информации по кол-ву"
+    END AS 'Тип заказа'
 FROM sales;
 
 CREATE TABLE orders (
@@ -60,10 +60,10 @@ INSERT INTO orders (
 ALTER TABLE orders ADD FOREIGN KEY (employee_id) REFERENCES employee (id_employee);
 
 SELECT *,
-CASE
-WHEN order_status = "OPEN" THEN "Заказ открыт"
-WHEN order_status = "CLOSED" THEN "Заказ закрыт"
-WHEN order_status = "CENCELLED" THEN "Заказ обрабатывается"
-ELSE ""
-END AS 'Тип заказа'
+    CASE
+    WHEN order_status = "OPEN" THEN "Заказ открыт"
+    WHEN order_status = "CLOSED" THEN "Заказ закрыт"
+    WHEN order_status = "CENCELLED" THEN "Заказ отменен"
+    ELSE ""
+    END AS 'Тип заказа'
 FROM orders;
