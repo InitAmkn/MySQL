@@ -1,3 +1,4 @@
+-- Active: 1687707814409@@localhost@3306@hw_1
 use hw_1;
 
  CREATE TABLE mobile_phones(
@@ -23,10 +24,10 @@ use hw_1;
  
 SELECT *
 FROM mobile_phones
-WHERE product_name LIKE "%Iphone%"
-    or manufacturer LIKE "%Iphone%"
-    or product_count LIKE "%Iphone%"
-    or price LIKE "%Iphone%";
+WHERE product_name || 
+      manufacturer ||
+      product_count ||
+      price LIKE "%Iphone%";
 SELECT *
 FROM mobile_phones
 WHERE product_name LIKE "%Samsung%"
