@@ -1,6 +1,13 @@
 -- Active: 1687803132509@@localhost@3306@s4
-
-
+/*
+Добрый день!
+В первом задании не совсем правильный ответ. Не видно само количество лайков
+Вывелся id = 7 и количество лайков = 0. Нужно получить суммарное количество лайков для группы пользователей из условия.
+Да и лайков там не 0, а три)
+Второе задание выполнено верно, хотя хотелось бы увидеть именно ответ, у кого лайков больше, а не просто сопоставление двух чисел)
+В третьем задании вы вывели как раз всех пользователей, которые отправляли сообщения. А задание звучит ровно наоборот) там должны быть пользователи 5,6,7
+Попробуйте внести корректировки к запросам. Их можете отправить в личные сообщения. Оценку поправлю)
+*/
 SELECT 
 users.firstname,
 users.lastname,
@@ -46,11 +53,13 @@ GROUP BY profiles.gender;
 SELECT 
 users.id,
 users.firstname,
-users.lastname
+users.lastname,
+messages.from_user_id
 FROM
 users
-RIGHT JOIN messages ON users.id = messages.from_user_id
-GROUP BY users.id;
+LEFT JOIN messages ON users.id = messages.from_user_id
+GROUP BY users.id
+HAVING ;
 
 --(по желанию)* Пусть задан некоторый пользователь. Из всех друзей этого пользователя найдите человека, который больше всех написал ему сообщений.
 
@@ -76,8 +85,26 @@ WITH
         cte2
          JOIN cte1 ON cte1_from_user_id = cte2_target_user_id)
 
-SELECT cte1_from_user_id, cte1_COUNT_messages
+SELECT *
 FROM cte3
 WHERE cte1_to_user_id = 1;
+
+/*
+-- Найти самых высокооплачиваемых сотрудников по каждой должности
+
+SELECT rank_salary, 
+	staff,
+	post, 
+	salary
+FROM 	
+(SELECT 
+	DENSE_RANK() OVER(PARTITION BY post ORDER BY salary DESC) AS rank_salary, 
+	CONCAT(firstname, ' ', lastname) AS staff,
+	post, 
+	salary
+FROM staff) AS list
+WHERE rank_salary=1
+ORDER BY salary DESC;
+*/
 
 SELECT * FROM friend_id_1;
