@@ -1,13 +1,7 @@
 -- Active: 1687803132509@@localhost@3306@s4
-/*
-Добрый день!
-В первом задании не совсем правильный ответ. Не видно само количество лайков
-Вывелся id = 7 и количество лайков = 0. Нужно получить суммарное количество лайков для группы пользователей из условия.
-Да и лайков там не 0, а три)
-Второе задание выполнено верно, хотя хотелось бы увидеть именно ответ, у кого лайков больше, а не просто сопоставление двух чисел)
-В третьем задании вы вывели как раз всех пользователей, которые отправляли сообщения. А задание звучит ровно наоборот) там должны быть пользователи 5,6,7
-Попробуйте внести корректировки к запросам. Их можете отправить в личные сообщения. Оценку поправлю)
-*/
+
+
+
 SELECT 
 users.firstname,
 users.lastname,
@@ -20,7 +14,12 @@ JOIN users on likes.id = users.id
 JOIN media on media_id = media.id;
 
 --Подсчитать общее количество лайков, которые получили пользователи младше 12 лет.
-
+/*
+Добрый день!
+В первом задании не совсем правильный ответ. Не видно само количество лайков
+Вывелся id = 7 и количество лайков = 0. Нужно получить суммарное количество лайков для группы пользователей из условия.
+Да и лайков там не 0, а три)
+*/
 SELECT 
 media.user_id,
 users.firstname,
@@ -37,29 +36,30 @@ HAVING
 YEAR(UTC_DATE()) - YEAR(profiles.birthday) < 12;
 
 
+
 --Определить кто больше поставил лайков (всего): мужчины или женщины. 
+--Второе задание выполнено верно, хотя хотелось бы увидеть именно ответ, у кого лайков больше, а не просто сопоставление двух чисел)
 
 SELECT 
-profiles.gender,
-COUNT(likes.id) as count_likes
+profiles.gender
 FROM
 users
 LEFT JOIN likes ON likes.user_id = users.id
 LEFT JOIN profiles ON users.id = profiles.user_id
-GROUP BY profiles.gender;
+GROUP BY profiles.gender
+ORDER BY COUNT(likes.id) DESC LIMIT 1;
 
 --Вывести всех пользователей, которые не отправляли сообщения.
 
 SELECT 
 users.id,
 users.firstname,
-users.lastname,
-messages.from_user_id
+users.lastname
 FROM
 users
 LEFT JOIN messages ON users.id = messages.from_user_id
-GROUP BY users.id
-HAVING ;
+WHERE from_user_id IS NULL
+GROUP BY users.id;
 
 --(по желанию)* Пусть задан некоторый пользователь. Из всех друзей этого пользователя найдите человека, который больше всех написал ему сообщений.
 
@@ -89,22 +89,6 @@ SELECT *
 FROM cte3
 WHERE cte1_to_user_id = 1;
 
-/*
--- Найти самых высокооплачиваемых сотрудников по каждой должности
 
-SELECT rank_salary, 
-	staff,
-	post, 
-	salary
-FROM 	
-(SELECT 
-	DENSE_RANK() OVER(PARTITION BY post ORDER BY salary DESC) AS rank_salary, 
-	CONCAT(firstname, ' ', lastname) AS staff,
-	post, 
-	salary
-FROM staff) AS list
-WHERE rank_salary=1
-ORDER BY salary DESC;
-*/
 
 SELECT * FROM friend_id_1;
